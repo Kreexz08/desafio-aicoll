@@ -1,16 +1,16 @@
 # Desafío Aicoll - API de Gestión de Empresas
 
-Este repositorio contiene la implementación de una API REST para la gestión de empresas, desarrollada como parte del desafío técnico de Aicoll. La API permite realizar operaciones CRUD sobre un registro de empresas, siguiendo una arquitectura limpia y principios de diseño robustos.
+Este repositorio contiene la implementación de una API REST para la gestión de empresas, desarrollada como parte del desafío técnico de Aicoll. [cite_start]La API permite realizar operaciones CRUD sobre un registro de empresas, siguiendo una arquitectura limpia y principios de diseño robustos. 
 
 ## Características Principales
 
-* **Creación de Empresas:** Agregar nuevas empresas con validación de datos.
-* **Actualización de Datos:** Modificar nombre, dirección, teléfono y estado de una empresa existente.
-* **Consulta de Empresas:** Obtener una empresa específica por su NIT o listar todas las empresas con filtros y paginación.
-* **Eliminación de Empresas:** Borrar empresas individuales (si están inactivas) o realizar un borrado masivo de todas las empresas inactivas.
-* **Arquitectura Avanzada:** Implementación de CQRS (Command Query Responsibility Segregation) y principios de Diseño Guiado por el Dominio (DDD).
-* **Manejo de Errores:** Sistema de excepciones personalizadas para respuestas de API claras y consistentes.
-* **Pruebas Unitarias:** Cobertura de pruebas para asegurar la fiabilidad y el correcto funcionamiento de la lógica de negocio.
+* [cite_start]**Creación de Empresas:** Agregar nuevas empresas con validación de datos. 
+* [cite_start]**Actualización de Datos:** Modificar nombre, dirección, teléfono y estado de una empresa existente. 
+* [cite_start]**Consulta de Empresas:** Obtener una empresa específica por su NIT o listar todas las empresas con filtros y paginación. 
+* [cite_start]**Eliminación de Empresas:** Realizar un borrado masivo de todas las empresas inactivas. 
+* [cite_start]**Arquitectura Avanzada:** Implementación de CQRS (Command Query Responsibility Segregation) y principios de Diseño Guiado por el Dominio (DDD). 
+* [cite_start]**Manejo de Errores:** Sistema de excepciones personalizadas para respuestas de API claras y consistentes. 
+* [cite_start]**Pruebas Unitarias:** Cobertura de pruebas para asegurar la fiabilidad y el correcto funcionamiento de la lógica de negocio. 
 
 ## Arquitectura y Estructura del Proyecto
 
@@ -45,8 +45,8 @@ Es el punto de entrada a la aplicación. Para esta API, maneja las solicitudes y
 
 * PHP >= 8.2
 * Composer
-* Laravel >= 10.x
-* Un motor de base de datos soportado por Laravel (ej. MySQL, PostgreSQL, SQLite).
+* [cite_start]Laravel >= 10.x 
+* [cite_start]Un motor de base de datos soportado por Laravel (ej. MySQL, PostgreSQL, SQLite). 
 
 ## Instalación y Configuración
 
@@ -54,7 +54,7 @@ Sigue estos pasos para poner en marcha el proyecto en un entorno local:
 
 1.  **Clonar el repositorio:**
     ```bash
-    git clone [https://github.com/TU_NOMBRE_DE_USUARIO/desafio-aicoll.git](https://github.com/TU_NOMBRE_DE_USUARIO/desafio-aicoll.git)
+    git clone [https://github.com/Kreexz08/desafio-aicoll.git](https://github.com/Kreexz08/desafio-aicoll.git)
     cd desafio-aicoll
     ```
 
@@ -92,14 +92,14 @@ Sigue estos pasos para poner en marcha el proyecto en un entorno local:
 Todas las respuestas y envíos de datos son en formato JSON.
 
 ### 1. Listar Empresas
-- **Funcionalidad:** Obtiene una lista de todas las empresas. [cite_start]Soporta paginación y filtrado por estado. 
-- **Método:** `GET`
-- **URI:** `/empresas`
-- **Parámetros de Consulta (Opcionales):**
-    - `estado` (string): Filtra por `Activo` o `Inactivo`.
-    - `page` (integer): Número de página para la paginación.
-    - `perPage` (integer): Número de resultados por página.
-- **Respuesta Exitosa (200 OK):**
+-   **Funcionalidad:** Obtiene una lista de todas las empresas. [cite_start]Soporta paginación y filtrado por estado. 
+-   **Método:** `GET`
+-   **URI:** `/empresas`
+-   **Parámetros de Consulta (Opcionales):**
+    -   `estado` (string): Filtra por `Activo` o `Inactivo`.
+    -   `page` (integer): Número de página para la paginación.
+    -   `perPage` (integer): Número de resultados por página.
+-   **Respuesta Exitosa (200 OK):**
     ```json
     {
         "data": [
@@ -124,11 +124,11 @@ Todas las respuestas y envíos de datos son en formato JSON.
     ```
 
 ### 2. Obtener una Empresa por NIT
-- [cite_start]**Funcionalidad:** Devuelve los detalles de una empresa específica. 
-- **Método:** `GET`
-- **URI:** `/empresas/{nit}`
-- **Ejemplo:** `/empresas/900111222-1`
-- **Respuesta Exitosa (200 OK):**
+-   [cite_start]**Funcionalidad:** Devuelve los detalles de una empresa específica. 
+-   **Método:** `GET`
+-   **URI:** `/empresas/{nit}`
+-   **Ejemplo:** `/empresas/900111222-1`
+-   **Respuesta Exitosa (200 OK):**
     ```json
     {
         "id": 1,
@@ -141,13 +141,13 @@ Todas las respuestas y envíos de datos son en formato JSON.
         "updated_at": "..."
     }
     ```
-- **Respuesta de Error (404 Not Found):** Si la empresa con el NIT especificado no existe.
+-   **Respuesta de Error (404 Not Found):** Si la empresa con el NIT especificado no existe.
 
 ### 3. Crear una Nueva Empresa
-- [cite_start]**Funcionalidad:** Registra una nueva empresa. 
-- **Método:** `POST`
-- **URI:** `/empresas`
-- **Cuerpo de la Solicitud (JSON):**
+-   [cite_start]**Funcionalidad:** Registra una nueva empresa.  [cite_start]El estado por defecto es 'Activo'. 
+-   **Método:** `POST`
+-   **URI:** `/empresas`
+-   **Cuerpo de la Solicitud (JSON):**
     ```json
     {
         "nit": "900999888-9",
@@ -156,32 +156,32 @@ Todas las respuestas y envíos de datos son en formato JSON.
         "telefono": "3215554433"
     }
     ```
-- **Respuesta Exitosa (201 Created):** Devuelve el objeto de la empresa recién creada.
-- **Respuestas de Error:**
-    - [cite_start]**409 Conflict:** Si el NIT ya existe. 
-    - [cite_start]**422 Unprocessable Entity:** Si los datos de entrada no superan la validación. 
+-   **Respuesta Exitosa (201 Created):** Devuelve el objeto de la empresa recién creada.
+-   **Respuestas de Error:**
+    -   **409 Conflict:** Si el NIT ya existe. 
+    -   **422 Unprocessable Entity:** Si los datos de entrada no superan la validación. 
 
 ### 4. Actualizar una Empresa
-- [cite_start]**Funcionalidad:** Actualiza los datos de una empresa existente (nombre, dirección, teléfono, estado). 
-- **Método:** `PATCH` o `PUT`
-- **URI:** `/empresas/{nit}`
-- **Cuerpo de la Solicitud (JSON, solo los campos a cambiar):**
+-   [cite_start]**Funcionalidad:** Actualiza los datos de una empresa existente (nombre, dirección, teléfono, estado). 
+-   **Método:** `PATCH` o `PUT`
+-   **URI:** `/empresas/{nit}`
+-   **Cuerpo de la Solicitud (JSON, solo los campos a cambiar):**
     ```json
     {
         "nombre": "Nuevo Nombre de la Empresa",
         "estado": "Inactivo"
     }
     ```
-- **Respuesta Exitosa (200 OK):** Devuelve el objeto de la empresa con los datos actualizados.
-- **Respuestas de Error:**
-    - **404 Not Found:** Si la empresa con el NIT especificado no existe.
-    - **422 Unprocessable Entity:** Si los datos de entrada no superan la validación.
+-   **Respuesta Exitosa (200 OK):** Devuelve el objeto de la empresa con los datos actualizados.
+-   **Respuestas de Error:**
+    -   **404 Not Found:** Si la empresa con el NIT especificado no existe.
+    -   **422 Unprocessable Entity:** Si los datos de entrada no superan la validación.
 
-### 5. Eliminar Empresas Inactivas (Batch)
-- [cite_start]**Funcionalidad:** Realiza un borrado masivo de todas las empresas con estado "Inactivo". 
-- **Método:** `POST`
-- **URI:** `/empresas/delete-inactive`
-- **Respuesta Exitosa (200 OK):**
+### 5. Eliminar Todas las Empresas Inactivas
+-   [cite_start]**Funcionalidad:** Realiza un borrado masivo de todas las empresas con estado "Inactivo". 
+-   **Método:** `POST`
+-   **URI:** `/empresas/delete-inactive`
+-   **Respuesta Exitosa (200 OK):**
     ```json
     {
         "message": "Se eliminaron 2 empresas inactivas."
@@ -189,23 +189,23 @@ Todas las respuestas y envíos de datos son en formato JSON.
     ```
 
 ### 6. Eliminar una Empresa por NIT
-- **Funcionalidad:** Elimina una empresa específica. **Nota:** La lógica implementada solo permite eliminar empresas que ya se encuentren en estado "Inactivo".
-- **Método:** `DELETE`
-- **URI:** `/empresas/{nit}`
-- **Respuesta Exitosa (204 No Content):** No devuelve cuerpo.
-- **Respuestas de Error:**
-    - **404 Not Found:** Si la empresa no existe.
-    * **422 Unprocessable Entity:** Si se intenta eliminar una empresa con estado "Activo".
+-   **Funcionalidad:** Elimina una empresa específica. La lógica implementada solo permite eliminar empresas que ya se encuentren en estado "Inactivo".
+-   **Método:** `DELETE`
+-   **URI:** `/empresas/{nit}`
+-   **Respuesta Exitosa (204 No Content):** No devuelve cuerpo.
+-   **Respuestas de Error:**
+    -   **404 Not Found:** Si la empresa no existe.
+    -   **422 Unprocessable Entity:** Si se intenta eliminar una empresa con estado "Activo".
 
 ## Pruebas
 
 [cite_start]El proyecto incluye un conjunto de pruebas unitarias para validar la lógica del dominio y la aplicación, demostrando el conocimiento en esta área como se sugiere en los criterios de evaluación. 
 
-* **Para ejecutar todas las pruebas:**
+-   **Para ejecutar todas las pruebas:**
     ```bash
     php artisan test
     ```
-* **Para ejecutar un archivo de prueba específico:**
+-   **Para ejecutar un archivo de prueba específico:**
     ```bash
     php artisan test tests/Unit/Domain/Empresa/ValueObjects/NitTest.php
     ```
