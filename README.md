@@ -22,7 +22,7 @@ Es el núcleo de la aplicación. Contiene toda la lógica de negocio y no depend
 * **Value Objects (`ValueObjects`):** Objetos inmutables que representan valores simples del dominio con sus propias reglas de validación (ej. `Nit`, `Estado`).
 * **Interfaces de Repositorio (`Interfaces`):** Definen los contratos para la persistencia de datos, abstrayendo la capa de dominio de los detalles de la base de datos.
 * **Excepciones de Dominio (`Exceptions`):** Errores específicos de las reglas de negocio (ej. `DuplicateNitException`).
-* **Casting (`Casts`):** Clases para convertir automáticamente datos de la BD a Value Objects del Dominio.
+
 
 ### Capa de Aplicación (`app/Application`)
 Orquesta los flujos de trabajo y casos de uso. No contiene lógica de negocio, sino que dirige a las entidades de dominio para que la ejecuten.
@@ -35,6 +35,7 @@ Orquesta los flujos de trabajo y casos de uso. No contiene lógica de negocio, s
 Contiene los detalles de implementación de tecnologías externas, como la base de datos.
 * **Modelos Eloquent (`Models`):** Implementación concreta para interactuar con la base de datos usando el ORM de Laravel (ej. `EmpresaModel`).
 * **Repositorios (`Repositories`):** Implementación concreta de las interfaces de repositorio definidas en el Dominio (ej. `EloquentEmpresaRepository`).
+* **Casting (`Casts`):** Clases para convertir automáticamente datos de la BD a Value Objects del Dominio.
 
 
 ### Capa de Presentación (`app/Presenter`)

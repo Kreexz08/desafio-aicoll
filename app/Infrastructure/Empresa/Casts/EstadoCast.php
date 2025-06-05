@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Domain\Empresa\Casts;
+namespace App\Infrastructure\Empresa\Casts;
 
-use App\Domain\Empresa\ValueObjects\Nit;
+use App\Domain\Empresa\ValueObjects\Estado;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use InvalidArgumentException; 
+use InvalidArgumentException;
 
-class NitCast implements CastsAttributes
+class EstadoCast implements CastsAttributes
 {
     public function get($model, string $key, $value, array $attributes)
     {
         if (is_null($value)) {
             return null;
         }
-        return new Nit((string) $value);
+        return new Estado((string) $value);
     }
 
     public function set($model, string $key, $value, array $attributes)
@@ -22,13 +22,14 @@ class NitCast implements CastsAttributes
             return null;
         }
 
-        if (!$value instanceof Nit) {
-            try {
-                $value = new Nit((string) $value);
+        if (!$value instanceof Estado) {
+           try {
+                $value = new Estado((string) $value);
             } catch (\Exception $e) {
-                throw new InvalidArgumentException("El valor '{$value}' proporcionado para el NIT no es válido: " . $e->getMessage());
+                throw new InvalidArgumentException("El valor '{$value}' proporcionado para el Estado no es válido: " . $e->getMessage());
             }
         }
+
         return $value->getValue();
     }
 }

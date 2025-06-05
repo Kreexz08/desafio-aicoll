@@ -2,8 +2,9 @@
 
 namespace App\Domain\Empresa\ValueObjects;
 
-use App\Domain\Empresa\Casts\NitCast;
+
 use App\Domain\Empresa\Exceptions\InvalidEmpresaDataException;
+use App\Infrastructure\Empresa\Casts\NitCast;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 
 class Nit implements Castable

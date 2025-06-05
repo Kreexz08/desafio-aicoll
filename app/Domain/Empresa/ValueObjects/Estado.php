@@ -2,8 +2,9 @@
 
 namespace App\Domain\Empresa\ValueObjects;
 
-use App\Domain\Empresa\Casts\EstadoCast; 
+
 use App\Domain\Empresa\Exceptions\InvalidEmpresaDataException;
+use App\Infrastructure\Empresa\Casts\EstadoCast;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 
 class Estado implements Castable
