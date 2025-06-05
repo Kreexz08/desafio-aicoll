@@ -152,10 +152,14 @@ Todas las respuestas y envíos de datos son en formato JSON.
 -   **Cuerpo de la Solicitud (JSON):**
     ```json
     {
-        "nit": "900999888-9",
-        "nombre": "Nueva Empresa Creativa",
-        "direccion": "Calle de la Creación 123",
-        "telefono": "3215554433"
+    "id": 1,
+    "nit": "900111222-1",
+    "nombre": "TecnoSoluciones Activa SAS",
+    "direccion": "Avenida Siempre Viva 742",
+    "telefono": "3012345678",
+    "estado": "Activo",
+    "created_at": "2025-06-05 23:09:09",
+    "updated_at": "2025-06-05 23:09:09"
     }
     ```
 -   **Respuesta Exitosa (201 Created):** Devuelve el objeto de la empresa recién creada.
@@ -167,11 +171,19 @@ Todas las respuestas y envíos de datos son en formato JSON.
 -   **Funcionalidad:** Actualiza los datos de una empresa existente (nombre, dirección, teléfono, estado). 
 -   **Método:** `PUT`
 -   **URI:** `/empresas/{nit}`
--   **Cuerpo de la Solicitud (JSON, solo los campos a cambiar):**
+-   **Cuerpo de la Solicitud (JSON):**
     ```json
     {
-        "nombre": "Nuevo Nombre de la Empresa",
-        "estado": "Inactivo"
+        
+        "id": 1,
+        "nit": "900111222-1",
+        "nombre": "TecnoSoluciones Activa SAS",
+        "direccion": "Avenida Siempre Viva 487",
+        "telefono": "3003000000",
+        "estado": "Activo",
+        "created_at": "2025-06-05 23:09:09",
+        "updated_at": "2025-06-05 23:10:24"
+
     }
     ```
 -   **Respuesta Exitosa (200 OK):** Devuelve el objeto de la empresa con los datos actualizados.
