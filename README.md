@@ -1,61 +1,211 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Desafío Aicoll - API de Gestión de Empresas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este repositorio contiene la implementación de una API REST para la gestión de empresas, desarrollada como parte del desafío técnico de Aicoll. La API permite realizar operaciones CRUD sobre un registro de empresas, siguiendo una arquitectura limpia y principios de diseño robustos.
 
-## About Laravel
+## Características Principales
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* **Creación de Empresas:** Agregar nuevas empresas con validación de datos.
+* **Actualización de Datos:** Modificar nombre, dirección, teléfono y estado de una empresa existente.
+* **Consulta de Empresas:** Obtener una empresa específica por su NIT o listar todas las empresas con filtros y paginación.
+* **Eliminación de Empresas:** Borrar empresas individuales (si están inactivas) o realizar un borrado masivo de todas las empresas inactivas.
+* **Arquitectura Avanzada:** Implementación de CQRS (Command Query Responsibility Segregation) y principios de Diseño Guiado por el Dominio (DDD).
+* **Manejo de Errores:** Sistema de excepciones personalizadas para respuestas de API claras y consistentes.
+* **Pruebas Unitarias:** Cobertura de pruebas para asegurar la fiabilidad y el correcto funcionamiento de la lógica de negocio.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Arquitectura y Estructura del Proyecto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+El proyecto está organizado siguiendo los principios de la Arquitectura Limpia y el patrón CQRS para separar las responsabilidades y maximizar la mantenibilidad y escalabilidad. Las capas principales son:
 
-## Learning Laravel
+### Capa de Dominio (`app/Domain`)
+Es el núcleo de la aplicación. Contiene toda la lógica de negocio y no depende de ninguna otra capa.
+* **Entidades (`Entities`):** Representan los objetos de negocio principales (ej. `Empresa`).
+* **Value Objects (`ValueObjects`):** Objetos inmutables que representan valores simples del dominio con sus propias reglas de validación (ej. `Nit`, `Estado`).
+* **Interfaces de Repositorio (`Interfaces`):** Definen los contratos para la persistencia de datos, abstrayendo la capa de dominio de los detalles de la base de datos.
+* **Excepciones de Dominio (`Exceptions`):** Errores específicos de las reglas de negocio (ej. `DuplicateNitException`).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Capa de Aplicación (`app/Application`)
+Orquesta los flujos de trabajo y casos de uso. No contiene lógica de negocio, sino que dirige a las entidades de dominio para que la ejecuten.
+* **Comandos (`Commands`):** Objetos que representan una intención de cambiar el estado del sistema (ej. `CreateEmpresaCommand`).
+* **Consultas (`Queries`):** Objetos que representan una solicitud de datos (ej. `GetEmpresaQuery`).
+* **Manejadores (`Handlers`):** Clases que procesan los Comandos y Consultas, interactuando con el dominio y el repositorio.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Capa de Infraestructura (`app/Infrastructure`)
+Contiene los detalles de implementación de tecnologías externas, como la base de datos.
+* **Modelos Eloquent (`Models`):** Implementación concreta para interactuar con la base de datos usando el ORM de Laravel (ej. `EmpresaModel`).
+* **Repositorios (`Repositories`):** Implementación concreta de las interfaces de repositorio definidas en el Dominio (ej. `EloquentEmpresaRepository`).
+* **Casting (`Casts`):** Clases para convertir automáticamente datos de la BD a Value Objects del Dominio.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Capa de Presentación (`app/Presenter`)
+Es el punto de entrada a la aplicación. Para esta API, maneja las solicitudes y respuestas HTTP.
+* **Controladores (`Http`):** Controladores delgados (a menudo de acción única) que reciben la solicitud HTTP.
+* **Form Requests (`Http`):** Clases que manejan la validación de la entrada HTTP antes de que llegue al controlador.
+* **Manejador de Excepciones (`Exceptions`):** Personalización del manejador de excepciones de Laravel para devolver respuestas JSON estructuradas.
 
-## Laravel Sponsors
+## Requisitos Técnicos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* PHP >= 8.2
+* Composer
+* Laravel >= 10.x
+* Un motor de base de datos soportado por Laravel (ej. MySQL, PostgreSQL, SQLite).
 
-### Premium Partners
+## Instalación y Configuración
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Sigue estos pasos para poner en marcha el proyecto en un entorno local:
 
-## Contributing
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/TU_NOMBRE_DE_USUARIO/desafio-aicoll.git](https://github.com/TU_NOMBRE_DE_USUARIO/desafio-aicoll.git)
+    cd desafio-aicoll
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2.  **Instalar dependencias de PHP:**
+    ```bash
+    composer install
+    ```
 
-## Code of Conduct
+3.  **Configurar el archivo de entorno:**
+    * Copia el archivo de ejemplo `.env.example` a un nuevo archivo llamado `.env`:
+        ```bash
+        cp .env.example .env
+        ```
+    * Abre el archivo `.env` y configura tus credenciales de base de datos (DB_DATABASE, DB_USERNAME, DB_PASSWORD, etc.).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4.  **Generar la clave de la aplicación:**
+    ```bash
+    php artisan key:generate
+    ```
 
-## Security Vulnerabilities
+5.  **Ejecutar las migraciones y los seeders:**
+    * Este comando creará la tabla `empresas` y la poblará con datos de prueba.
+        ```bash
+        php artisan migrate:fresh --seed
+        ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6.  **Iniciar el servidor de desarrollo:**
+    ```bash
+    php artisan serve
+    ```
+    La API estará disponible en `http://127.0.0.1:8000`.
 
-## License
+## Documentación de la API (Endpoints)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Todas las respuestas y envíos de datos son en formato JSON.
+
+### 1. Listar Empresas
+- **Funcionalidad:** Obtiene una lista de todas las empresas. [cite_start]Soporta paginación y filtrado por estado. 
+- **Método:** `GET`
+- **URI:** `/empresas`
+- **Parámetros de Consulta (Opcionales):**
+    - `estado` (string): Filtra por `Activo` o `Inactivo`.
+    - `page` (integer): Número de página para la paginación.
+    - `perPage` (integer): Número de resultados por página.
+- **Respuesta Exitosa (200 OK):**
+    ```json
+    {
+        "data": [
+            {
+                "id": 1,
+                "nit": "900111222-1",
+                "nombre": "TecnoSoluciones Activa SAS",
+                "direccion": "Avenida Siempre Viva 742",
+                "telefono": "3012345678",
+                "estado": "Activo",
+                "created_at": "...",
+                "updated_at": "..."
+            }
+        ],
+        "pagination": {
+            "total": 5,
+            "per_page": 15,
+            "current_page": 1,
+            "last_page": 1
+        }
+    }
+    ```
+
+### 2. Obtener una Empresa por NIT
+- [cite_start]**Funcionalidad:** Devuelve los detalles de una empresa específica. 
+- **Método:** `GET`
+- **URI:** `/empresas/{nit}`
+- **Ejemplo:** `/empresas/900111222-1`
+- **Respuesta Exitosa (200 OK):**
+    ```json
+    {
+        "id": 1,
+        "nit": "900111222-1",
+        "nombre": "TecnoSoluciones Activa SAS",
+        "direccion": "Avenida Siempre Viva 742",
+        "telefono": "3012345678",
+        "estado": "Activo",
+        "created_at": "...",
+        "updated_at": "..."
+    }
+    ```
+- **Respuesta de Error (404 Not Found):** Si la empresa con el NIT especificado no existe.
+
+### 3. Crear una Nueva Empresa
+- [cite_start]**Funcionalidad:** Registra una nueva empresa. 
+- **Método:** `POST`
+- **URI:** `/empresas`
+- **Cuerpo de la Solicitud (JSON):**
+    ```json
+    {
+        "nit": "900999888-9",
+        "nombre": "Nueva Empresa Creativa",
+        "direccion": "Calle de la Creación 123",
+        "telefono": "3215554433"
+    }
+    ```
+- **Respuesta Exitosa (201 Created):** Devuelve el objeto de la empresa recién creada.
+- **Respuestas de Error:**
+    - [cite_start]**409 Conflict:** Si el NIT ya existe. 
+    - [cite_start]**422 Unprocessable Entity:** Si los datos de entrada no superan la validación. 
+
+### 4. Actualizar una Empresa
+- [cite_start]**Funcionalidad:** Actualiza los datos de una empresa existente (nombre, dirección, teléfono, estado). 
+- **Método:** `PATCH` o `PUT`
+- **URI:** `/empresas/{nit}`
+- **Cuerpo de la Solicitud (JSON, solo los campos a cambiar):**
+    ```json
+    {
+        "nombre": "Nuevo Nombre de la Empresa",
+        "estado": "Inactivo"
+    }
+    ```
+- **Respuesta Exitosa (200 OK):** Devuelve el objeto de la empresa con los datos actualizados.
+- **Respuestas de Error:**
+    - **404 Not Found:** Si la empresa con el NIT especificado no existe.
+    - **422 Unprocessable Entity:** Si los datos de entrada no superan la validación.
+
+### 5. Eliminar Empresas Inactivas (Batch)
+- [cite_start]**Funcionalidad:** Realiza un borrado masivo de todas las empresas con estado "Inactivo". 
+- **Método:** `POST`
+- **URI:** `/empresas/delete-inactive`
+- **Respuesta Exitosa (200 OK):**
+    ```json
+    {
+        "message": "Se eliminaron 2 empresas inactivas."
+    }
+    ```
+
+### 6. Eliminar una Empresa por NIT
+- **Funcionalidad:** Elimina una empresa específica. **Nota:** La lógica implementada solo permite eliminar empresas que ya se encuentren en estado "Inactivo".
+- **Método:** `DELETE`
+- **URI:** `/empresas/{nit}`
+- **Respuesta Exitosa (204 No Content):** No devuelve cuerpo.
+- **Respuestas de Error:**
+    - **404 Not Found:** Si la empresa no existe.
+    * **422 Unprocessable Entity:** Si se intenta eliminar una empresa con estado "Activo".
+
+## Pruebas
+
+[cite_start]El proyecto incluye un conjunto de pruebas unitarias para validar la lógica del dominio y la aplicación, demostrando el conocimiento en esta área como se sugiere en los criterios de evaluación. 
+
+* **Para ejecutar todas las pruebas:**
+    ```bash
+    php artisan test
+    ```
+* **Para ejecutar un archivo de prueba específico:**
+    ```bash
+    php artisan test tests/Unit/Domain/Empresa/ValueObjects/NitTest.php
+    ```
