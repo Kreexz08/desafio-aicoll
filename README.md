@@ -1,16 +1,16 @@
 # Desafío Aicoll - API de Gestión de Empresas
 
-Este repositorio contiene la implementación de una API REST para la gestión de empresas, desarrollada como parte del desafío técnico de Aicoll. [cite_start]La API permite realizar operaciones CRUD sobre un registro de empresas, siguiendo una arquitectura limpia y principios de diseño robustos. 
+Este repositorio contiene la implementación de una API REST para la gestión de empresas, desarrollada como parte del desafío técnico de Aicoll. La API permite realizar operaciones CRUD sobre un registro de empresas, siguiendo una arquitectura limpia y principios de diseño robustos. 
 
 ## Características Principales
 
-* [cite_start]**Creación de Empresas:** Agregar nuevas empresas con validación de datos. 
-* [cite_start]**Actualización de Datos:** Modificar nombre, dirección, teléfono y estado de una empresa existente. 
-* [cite_start]**Consulta de Empresas:** Obtener una empresa específica por su NIT o listar todas las empresas con filtros y paginación. 
-* [cite_start]**Eliminación de Empresas:** Realizar un borrado masivo de todas las empresas inactivas. 
-* [cite_start]**Arquitectura Avanzada:** Implementación de CQRS (Command Query Responsibility Segregation) y principios de Diseño Guiado por el Dominio (DDD). 
-* [cite_start]**Manejo de Errores:** Sistema de excepciones personalizadas para respuestas de API claras y consistentes. 
-* [cite_start]**Pruebas Unitarias:** Cobertura de pruebas para asegurar la fiabilidad y el correcto funcionamiento de la lógica de negocio. 
+* **Creación de Empresas:** Agregar nuevas empresas con validación de datos. 
+* **Actualización de Datos:** Modificar nombre, dirección, teléfono y estado de una empresa existente. 
+* **Consulta de Empresas:** Obtener una empresa específica por su NIT o listar todas las empresas con filtros y paginación. 
+* **Eliminación de Empresas:** Realizar un borrado de una empresa por nit de una empresa inactiva o un borrado masivo de todas las empresas inactivas. 
+* **Arquitectura Avanzada:** Implementación de CQRS (Command Query Responsibility Segregation) y principios de Diseño Guiado por el Dominio (DDD). 
+* **Manejo de Errores:** Sistema de excepciones personalizadas para respuestas de API claras y consistentes. 
+* **Pruebas Unitarias:** Cobertura de pruebas para asegurar la fiabilidad y el correcto funcionamiento de la lógica de negocio. 
 
 ## Arquitectura y Estructura del Proyecto
 
@@ -22,6 +22,7 @@ Es el núcleo de la aplicación. Contiene toda la lógica de negocio y no depend
 * **Value Objects (`ValueObjects`):** Objetos inmutables que representan valores simples del dominio con sus propias reglas de validación (ej. `Nit`, `Estado`).
 * **Interfaces de Repositorio (`Interfaces`):** Definen los contratos para la persistencia de datos, abstrayendo la capa de dominio de los detalles de la base de datos.
 * **Excepciones de Dominio (`Exceptions`):** Errores específicos de las reglas de negocio (ej. `DuplicateNitException`).
+* **Casting (`Casts`):** Clases para convertir automáticamente datos de la BD a Value Objects del Dominio.
 
 ### Capa de Aplicación (`app/Application`)
 Orquesta los flujos de trabajo y casos de uso. No contiene lógica de negocio, sino que dirige a las entidades de dominio para que la ejecuten.
@@ -29,11 +30,12 @@ Orquesta los flujos de trabajo y casos de uso. No contiene lógica de negocio, s
 * **Consultas (`Queries`):** Objetos que representan una solicitud de datos (ej. `GetEmpresaQuery`).
 * **Manejadores (`Handlers`):** Clases que procesan los Comandos y Consultas, interactuando con el dominio y el repositorio.
 
+
 ### Capa de Infraestructura (`app/Infrastructure`)
 Contiene los detalles de implementación de tecnologías externas, como la base de datos.
 * **Modelos Eloquent (`Models`):** Implementación concreta para interactuar con la base de datos usando el ORM de Laravel (ej. `EmpresaModel`).
 * **Repositorios (`Repositories`):** Implementación concreta de las interfaces de repositorio definidas en el Dominio (ej. `EloquentEmpresaRepository`).
-* **Casting (`Casts`):** Clases para convertir automáticamente datos de la BD a Value Objects del Dominio.
+
 
 ### Capa de Presentación (`app/Presenter`)
 Es el punto de entrada a la aplicación. Para esta API, maneja las solicitudes y respuestas HTTP.
@@ -45,8 +47,8 @@ Es el punto de entrada a la aplicación. Para esta API, maneja las solicitudes y
 
 * PHP >= 8.2
 * Composer
-* [cite_start]Laravel >= 10.x 
-* [cite_start]Un motor de base de datos soportado por Laravel (ej. MySQL, PostgreSQL, SQLite). 
+* Laravel >= 10.x 
+* Un motor de base de datos soportado por Laravel (ej. MySQL, PostgreSQL, SQLite). 
 
 ## Instalación y Configuración
 
@@ -92,7 +94,7 @@ Sigue estos pasos para poner en marcha el proyecto en un entorno local:
 Todas las respuestas y envíos de datos son en formato JSON.
 
 ### 1. Listar Empresas
--   **Funcionalidad:** Obtiene una lista de todas las empresas. [cite_start]Soporta paginación y filtrado por estado. 
+-   **Funcionalidad:** Obtiene una lista de todas las empresas. Soporta paginación y filtrado por estado. 
 -   **Método:** `GET`
 -   **URI:** `/empresas`
 -   **Parámetros de Consulta (Opcionales):**
@@ -124,7 +126,7 @@ Todas las respuestas y envíos de datos son en formato JSON.
     ```
 
 ### 2. Obtener una Empresa por NIT
--   [cite_start]**Funcionalidad:** Devuelve los detalles de una empresa específica. 
+-   **Funcionalidad:** Devuelve los detalles de una empresa específica. 
 -   **Método:** `GET`
 -   **URI:** `/empresas/{nit}`
 -   **Ejemplo:** `/empresas/900111222-1`
@@ -144,7 +146,7 @@ Todas las respuestas y envíos de datos son en formato JSON.
 -   **Respuesta de Error (404 Not Found):** Si la empresa con el NIT especificado no existe.
 
 ### 3. Crear una Nueva Empresa
--   [cite_start]**Funcionalidad:** Registra una nueva empresa.  [cite_start]El estado por defecto es 'Activo'. 
+-   **Funcionalidad:** Registra una nueva empresa. El estado por defecto es 'Activo'. 
 -   **Método:** `POST`
 -   **URI:** `/empresas`
 -   **Cuerpo de la Solicitud (JSON):**
@@ -162,8 +164,8 @@ Todas las respuestas y envíos de datos son en formato JSON.
     -   **422 Unprocessable Entity:** Si los datos de entrada no superan la validación. 
 
 ### 4. Actualizar una Empresa
--   [cite_start]**Funcionalidad:** Actualiza los datos de una empresa existente (nombre, dirección, teléfono, estado). 
--   **Método:** `PATCH` o `PUT`
+-   **Funcionalidad:** Actualiza los datos de una empresa existente (nombre, dirección, teléfono, estado). 
+-   **Método:** `PUT`
 -   **URI:** `/empresas/{nit}`
 -   **Cuerpo de la Solicitud (JSON, solo los campos a cambiar):**
     ```json
@@ -178,7 +180,7 @@ Todas las respuestas y envíos de datos son en formato JSON.
     -   **422 Unprocessable Entity:** Si los datos de entrada no superan la validación.
 
 ### 5. Eliminar Todas las Empresas Inactivas
--   [cite_start]**Funcionalidad:** Realiza un borrado masivo de todas las empresas con estado "Inactivo". 
+-   **Funcionalidad:** Realiza un borrado masivo de todas las empresas con estado "Inactivo". 
 -   **Método:** `POST`
 -   **URI:** `/empresas/delete-inactive`
 -   **Respuesta Exitosa (200 OK):**
@@ -199,7 +201,7 @@ Todas las respuestas y envíos de datos son en formato JSON.
 
 ## Pruebas
 
-[cite_start]El proyecto incluye un conjunto de pruebas unitarias para validar la lógica del dominio y la aplicación, demostrando el conocimiento en esta área como se sugiere en los criterios de evaluación. 
+El proyecto incluye un conjunto de pruebas unitarias para validar la lógica del dominio y la aplicación, demostrando el conocimiento en esta área como se sugiere en los criterios de evaluación. 
 
 -   **Para ejecutar todas las pruebas:**
     ```bash
