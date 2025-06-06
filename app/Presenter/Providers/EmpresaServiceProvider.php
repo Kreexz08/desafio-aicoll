@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Empresa\Providers;
+namespace App\Presenter\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domain\Empresa\Interfaces\EmpresaRepositoryInterface;
